@@ -53,8 +53,7 @@ public class caloriescalculator{
         }
 
     //Check if they answered the measurement unit question
-    //This loop is for if they answered imperial
-        if (imperial && isValidInput) {
+        if (isValidInput) {
             //askes for sex: string loop
             System.out.println("What is your biological sex? \n Answer 'male' or 'female'.");
             
@@ -78,8 +77,8 @@ public class caloriescalculator{
             //numeric values starts
         }
 
-//Checks if user weight input is a actual integer, if not then put back into loop
-            if (isSexValidInput && isValidInput) {
+//Checks if user weight input is an float, if not then put back into loop
+        if (isSexValidInput && imperial) {
             System.out.print("What is your weight?\nPlease input number of lbs:");
             
             while (!isWeightValueInput){
@@ -95,9 +94,8 @@ public class caloriescalculator{
         }
     }
         
-
-//work in progress
-            if (isSexValidInput && isWeightValueInput) {
+//Checks if user height is an float, if not then put back into loop
+        if (isWeightValueInput && imperial) {
             System.out.print("What is your height?\nPlease input number of inches:");
             
             while (!isHeightValueInput){
@@ -112,13 +110,49 @@ public class caloriescalculator{
             }
         }
     }
+
+//Checks if they answered the measurement unit question
+//This loop is for if they answered metric
+        if (isSexValidInput && metric) {
+            System.out.print("What is your weight?\nPlease input number of lbs:");
+            
+            while (!isWeightValueInput){
+            if (scanner.hasNextFloat()){
+                float weightinput = scanner.nextFloat();
+                weight = weightinput;
+                isWeightValueInput = true;
+            } 
+            else {
+                System.out.print("What is your weight?\nPlease input number of lbs:");
+                scanner.next();
+            }
+        }
+    }
+    
+        if (isWeightValueInput && metric) {
+            System.out.print("What is your height?\nPlease input number of inches:");
+            
+            while (!isHeightValueInput){
+            if (scanner.hasNextFloat()){
+                float heightinput = scanner.nextFloat();
+                height = heightinput;
+                isHeightValueInput = true;
+            } 
+            else {
+                System.out.print("What is your height?\nPlease input number of inches: ");
+                scanner.next();
+            }
+        }
+    }
+
+//Checks if user age is an float, if not then put back into loop
             if (isSexValidInput && isWeightValueInput) {
             System.out.println("What is your age?\\nPlease input number of years:");
             
             while (!isAgeValueInput){
-            if (scanner.hasNextFloat()){
-                float ageinput = scanner.nextFloat();
-                height = ageinput;
+            if (scanner.hasNextInt()){
+                int ageinput = scanner.nextInt();
+                age = ageinput;
                 isAgeValueInput = true;
             } 
             else {
@@ -128,48 +162,26 @@ public class caloriescalculator{
         }
     }
 
-//Checks if they answered the measurement unit question
-//This loop is for if they answered metric
-        if (metric && isValidInput) {
-            System.out.println("What is your biological sex? \n Answer 'male' or 'female'.");
-            
-            //askes for sex: string loop
-            while (!isSexValidInput){
-            String sexinput = scanner.nextLine();
-                if (sexinput.equalsIgnoreCase("male") || sexinput.equalsIgnoreCase("m"))
-            {
-            isSexValidInput = true;
-            male = true;
-            }
-            else if (sexinput.equalsIgnoreCase("female") || sexinput.equalsIgnoreCase("f"))
-            {
-            isSexValidInput = true;
-            female = true;
-            } 
-            else {
-                System.out.println("What is your biological sex? \n Please Answer 'male' or 'female'.");
-            } 
-            }
-            //sex string loop ends
-            //numeric values starts
-            System.out.println("What is your weight in kgs?");
-            weight = scanner.nextInt();
-            System.out.println("What is your height in cm?");
-            height = scanner.nextInt();
-            System.out.println("What is your age in years?");
-            age = scanner.nextInt();
+//isAgeValueInput is the last condition when asking for numeric values, if it's true then all variable inputs are complete
+//result is now able to be calculated and be displayed to terminal
+        if (male && imperial && isAgeValueInput){
+            result = (float) (((4.536*weight)+(15.875*height)-(5*age))+5);
+            System.out.printf("Your BMR is"+ result);
         }
-
-        if (male && imperial){
-            result = (int) (((4.536*weight)+(15.875*height)-(5*age))+5);
-        }
-        if (female && imperial){
-            result = (int) (((4.536*weight)+(15.875*height)-(5*age))-165);
+        if (female && imperial && isAgeValueInput){
+            result = (float) (((4.536*weight)+(15.875*height)-(5*age))-165);
+            System.out.printf("Your BMR is"+ result);
         }
 
 
-        if (male && metric){
-            result = (int) (((4.536*weight)+(15.875*height)-(5*age))+5);
+        if (male && metric && isAgeValueInput){
+            result = (float) (((4.536*weight)+(15.875*height)-(5*age))+5);
+            System.out.printf("Your BMR is about"+ result);
+        }
+
+        if (female && metric && isAgeValueInput){
+            result = (float) (((4.536*weight)+(15.875*height)-(5*age))-165);
+            System.out.printf("Your BMR is about"+ result);
         }
 
 //For personal use. Checking boolean and variable value stored
